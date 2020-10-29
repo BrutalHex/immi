@@ -1,26 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import ImageLazy from '../../components/ImageLazy';
 import CardInfoBar from '../../components/CardInfoBar';
 import { pokemonSelected } from '../Pokemons/PokemonsPageAction';
 import SpinnerContainer from '../../components/spinner';
+import { push } from 'connected-react-router';
 
 const PokemonDetailPage = (props) => {
-  debugger;
+  const requestedName = props.match.params.selectedPokemon;
 
-  if (props.selectedPokemon == null) {
-    if (!props.pending) {
-      props.getSelectedPolemon('charizard');
+  if (
+    props.main.selectedPokemon == null ||
+    props.main.selectedPokemon == undefined ||
+    requestedName != props.main.selectedPokemon.name
+  ) {
+    if (!props.main.pending) {
+      props.getSelectedPolemon(props.match.params.selectedPokemon);
     }
+
     return (
       <SpinnerContainer>
-        <div className="whole">loading data for charizard</div>
+        <div className="whole">loading data for {props.match.params.selectedPokemon}</div>
       </SpinnerContainer>
     );
   }
 
-  const data = props.selectedPokemon;
+  const data = props.main.selectedPokemon;
 
   const link = `https://img.pokemondb.net/sprites/black-white/anim/normal/${data.name}.gif`;
 

@@ -11,9 +11,8 @@ const Spinner = ({ show, children }) => (
 );
 
 const mapStateToProps = (state, ownProps) => {
-  debugger;
   return {
-    show: state.pending,
+    show: state.main.pending,
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -4,8 +4,9 @@ import {
   Selected_Pokemon,
   Process_Pending,
 } from '../../Types/ActionTypes';
-import { getData } from '../../base/apiService';
 import { push } from 'connected-react-router';
+import { getData } from '../../base/apiService';
+
 export const getPokemons = () => {
   return (dispatch) => {
     dispatch(creatAction(Process_Pending, true));
@@ -14,8 +15,7 @@ export const getPokemons = () => {
       'https://pokeapi.co/api/v2/pokemon',
       { limit: 151 },
       (response) => {
-        dispatch(creatAction(Process_Pending, false));
-        return dispatch(creatAction(Get_Pokemons_List, response.results));
+        return dispatch(creatAction(Get_Pokemons_List, response.results, { pending: false }));
       },
 
       (error) => {}
@@ -32,11 +32,13 @@ export const pokemonSelected = (name) => {
       {},
 
       (response) => {
-        dispatch(creatAction(Process_Pending, false));
-        return dispatch(creatAction(Selected_Pokemon, response));
+        return dispatch(creatAction(Selected_Pokemon, response, { pending: false }));
       },
 
-      (error) => {}
+      (error) => {
+        dispatch(creatAction(Process_Pending, false));
+        dispatch(push(`/pokemon/`));
+      }
     );
   };
 };

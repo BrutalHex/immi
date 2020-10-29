@@ -1,18 +1,12 @@
 import { combineReducers } from 'redux';
 import { createBrowserHistory } from 'history';
 import { connectRouter } from 'connected-react-router';
-import {
-  pokemonsReducer,
-  pokemonsDetailReducer,
-  processPendingReducer,
-} from '../Pages/Pokemons/PokemonsPageReducer';
+import mainReducer from '../Pages/Pokemons/PokemonsPageReducer';
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  pokemons: pokemonsReducer,
-  selectedPokemon: pokemonsDetailReducer,
-  pending: processPendingReducer,
+  main: mainReducer,
   router: connectRouter(history),
 });
 
