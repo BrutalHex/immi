@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 const Spinner = ({ show, children }) => (
   <div className="whole overlayContainer">
@@ -10,13 +9,4 @@ const Spinner = ({ show, children }) => (
   </div>
 );
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    show: state.main.pending,
-  };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {};
-};
-const SpinnerContainer = connect(mapStateToProps, mapDispatchToProps)(Spinner);
-export default SpinnerContainer;
+export default Spinner;

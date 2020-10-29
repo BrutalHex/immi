@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router';
+
 import { connect } from 'react-redux';
 import ImageLazy from '../../components/ImageLazy';
 import CardInfoBar from '../../components/CardInfoBar';
 import { pokemonSelected } from '../Pokemons/PokemonsPageAction';
-import SpinnerContainer from '../../components/spinner';
+import Spinner from '../../components/spinner';
 import { push } from 'connected-react-router';
 
 const PokemonDetailPage = (props) => {
-  const requestedName = props.match.params.selectedPokemon;
+  let { selectedPokemon } = useParams();
 
-  if (
-    props.main.selectedPokemon == null ||
-    props.main.selectedPokemon == undefined ||
-    requestedName != props.main.selectedPokemon.name
-  ) {
-    if (!props.main.pending) {
-      props.getSelectedPolemon(props.match.params.selectedPokemon);
-    }
+  const [inti, setInit] = useState(true);
 
-    return (
-      <SpinnerContainer>
-        <div className="whole">loading data for {props.match.params.selectedPokemon}</div>
-      </SpinnerContainer>
-    );
+  let show = true;
+
+  if (inti) {
+    setInit(false);
+    props.getSelectedPolemon(selectedPokemon);
   }
 
-  const data = props.main.selectedPokemon;
+  if (
+    props.selectedPokemon == null ||
+    props.selectedPokemon == undefined ||
+    selectedPokemon != props.selectedPokemon.name
+  ) {
+    show = true;
+    return (
+      <Spinner show={show}>
+        <div className="whole">loading data for {props.match.params.selectedPokemon}</div>
+      </Spinner>
+    );
+  } else {
+    show = false;
+  }
+
+  const data = props.selectedPokemon;
 
   const link = `https://img.pokemondb.net/sprites/black-white/anim/normal/${data.name}.gif`;
 
