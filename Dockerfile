@@ -13,7 +13,7 @@ RUN npm run build
 
 
 # ------------------------------------------------------
-# Production Build
+# Production Build 
 # ------------------------------------------------------
 FROM nginx:1.16.0-alpine
 COPY --from=builder /react-frontend/build /usr/share/nginx/html/build
