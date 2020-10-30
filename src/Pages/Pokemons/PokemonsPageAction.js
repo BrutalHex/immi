@@ -1,11 +1,12 @@
 import { creatAction, Get_Pokemons_List, Selected_Pokemon } from '../../Types/ActionTypes';
 import { push } from 'connected-react-router';
-import { getData } from '../../base/apiService';
+import { getData, getDataAsync } from '../../base/apiService';
+import { baseUrl } from '../../base/settings';
 
 export const getPokemons = () => {
   return (dispatch) => {
-    getData(
-      'https://pokeapi.co/api/v2/pokemon',
+    return getDataAsync(
+      baseUrl,
       { limit: 151 },
       (response) => {
         return dispatch(creatAction(Get_Pokemons_List, response.results));
@@ -18,8 +19,8 @@ export const getPokemons = () => {
 
 export const pokemonSelected = (name) => {
   return (dispatch) => {
-    getData(
-      `https://pokeapi.co/api/v2/pokemon/${name}`,
+    return getDataAsync(
+      `${baseUrl}/${name}`,
       {},
 
       (response) => {

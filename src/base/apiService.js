@@ -15,3 +15,16 @@ export const getData = (url, params, callback, callbackError) => {
     })
     .then(function () {});
 };
+
+export const getDataAsync = async (url, params, callback, callbackError) => {
+  try {
+    const response = await axios.get(url, {
+      params: {
+        ...params,
+      },
+    });
+    return callback(response.data);
+  } catch (error) {
+    return callbackError(error);
+  }
+};

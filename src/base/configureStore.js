@@ -5,7 +5,7 @@ import { defaultMiddleware } from './middlewares';
 import rootReducer, { history } from './reducers';
 
 export default function configureStore(preloadedState) {
-  const definedMiddlewares = [routerMiddleware(history), defaultMiddleware, thunkMiddleware];
+  const definedMiddlewares = [thunkMiddleware, routerMiddleware(history), defaultMiddleware];
   const middlewareEnhancer = applyMiddleware(...definedMiddlewares);
   const store = createStore(rootReducer, preloadedState, middlewareEnhancer);
   return store;
